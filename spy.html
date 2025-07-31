@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>🚨 اخترقني 🚨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 50px;
+    }
+    .glitch {
+      font-size: 32px;
+      animation: glitch 1s infinite;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px red; }
+      50% { text-shadow: -2px -2px lime; }
+      100% { text-shadow: 2px 2px red; }
+    }
+    #data {
+      margin-top: 40px;
+      font-size: 20px;
+      line-height: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="glitch">🚨 جاري اختراق جهازك... 🚨</h1>
+  <p id="loadingText">يرجى الانتظار، يتم استخراج بياناتك الحساسة الآن...</p>
+
+  <div id="data"></div>
+
+  <audio id="alertSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_7c3e6e7006.mp3" autoplay></audio>
+
+  <script>
+    const dataDiv = document.getElementById("data");
+    const loadingText = document.getElementById("loadingText");
+    const sound = document.getElementById("alertSound");
+
+    const fakeData = [
+      "📍 موقعك: سوهاج، مصر (تم تحديدك على الخريطة)",
+      "🌐 عنوان IP: 41.43.212.XX",
+      "🔍 نوع الجهاز: Windows 11 - 64bit",
+      "🧠 المعالج: Intel Core i5",
+      "🛜 شبكة الاتصال: WiFi - مزود الخدمة: WE",
+      "🕵️‍♂️ VPN: لا - تم التأكد أنك لا تستخدم بروكسي",
+      "🧠 RAM: 12 جيجا - استهلاك مرتفع جدًا",
+      "🧨 منفذ 22 مفتوح (SSH) - جاري الدخول...",
+      "⚠️ تم إرسال نسخة من بياناتك إلى السيرفر الرئيسي!",
+      "🧬 تم التقاط لقطة من شاشتك الآن!"
+    ];
+
+    let index = 0;
+
+    function showNext() {
+      if (index < fakeData.length) {
+        const p = document.createElement("p");
+        p.textContent = fakeData[index];
+        dataDiv.appendChild(p);
+        index++;
+        setTimeout(showNext, 1500);
+      } else {
+        loadingText.textContent = "✅ تم الاختراق بنجاح! اضغط نسخ لحفظ البيانات.";
+        const btn = document.createElement("button");
+        btn.textContent = "📋 نسخ كل البيانات";
+        btn.style.padding = "10px 20px";
+        btn.style.marginTop = "20px";
+        btn.onclick = () => {
+          navigator.clipboard.writeText(fakeData.join('\n'));
+          alert("تم نسخ البيانات!");
+        };
+        dataDiv.appendChild(btn);
+      }
+    }
+
+    // تأخير بسيط بعد تشغيل الصوت
+    setTimeout(() => {
+      showNext();
+    }, 3000);
+  </script>
+
+</body>
+</html>
